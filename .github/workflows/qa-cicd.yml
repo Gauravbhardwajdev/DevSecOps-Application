@@ -45,7 +45,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3:11"
+          python-version: "3.11"
       - name: Install Checkov
         run: pip install checkov
       - name: Run Checkov Terraform Scan
@@ -69,7 +69,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3:11"
+          python-version: "3.11"
       - name: Install Checkov
         run: pip install checkov
       - name: Run Checkov Kubernetes Scan
@@ -94,7 +94,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3:11"
+          python-version: "3.11"
       - name: Install Checkov
         run: pip install checkov
       - name: Run Checkov Docker Scan
