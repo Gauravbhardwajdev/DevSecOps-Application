@@ -1,0 +1,10 @@
+name: Enterprise DevSecOps CID Pipeline
+
+on:
+  push:
+    branches:
+      -qa
+    paths:
+      - client/**
+      - server/**
+      - .github/workflows/qa-cicd.yml
