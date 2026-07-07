@@ -131,7 +131,7 @@ jobs:
           trivy fs ./client \
             --format json \
             --output client-trivy-fs-report.json \
-            --severity High,CRITICAL \
+            --severity HIGH,CRITICAL \
             --ignore-unfixed \
             --exit-code 0
             
@@ -139,7 +139,7 @@ jobs:
         run: |
           trivy fs ./client \
             --format table \
-            --severity High,CRITICAL \
+            --severity HIGH,CRITICAL \
             --ignore-unfixed \
             --exit-code 0 > client-trivy-fs-report.txt
     
@@ -178,7 +178,7 @@ jobs:
           trivy fs ./server \
             --format json \
             --output server-trivy-fs-report.json \
-            --severity High,CRITICAL \
+            --severity HIGH,CRITICAL \
             --ignore-unfixed \
             --exit-code 0
             
@@ -186,7 +186,7 @@ jobs:
         run: |
           trivy fs ./server \
             --format table \
-            --severity High,CRITICAL \
+            --severity HIGH,CRITICAL \
             --ignore-unfixed \
             --exit-code 0 > server-trivy-fs-report.txt
     
