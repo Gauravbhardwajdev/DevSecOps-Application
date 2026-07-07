@@ -204,7 +204,7 @@ jobs:
           path: server-trivy-fs-report.txt
           if-no-files-found: warn
   
- client -lint:  
+ client-lint:  
   name: Client Lint
   runs-on: ubuntu-latest
   needs:
@@ -213,11 +213,11 @@ jobs:
     - checkov-dockerfile
     - checkov-terraform
 
- defaults: 
-  run: 
-    working-directory: client
+  defaults: 
+   run: 
+     working-directory: client
 
- steps:
+  steps:
     - name: Checkout Source Code
       uses: actions/checkout@v4
       
@@ -235,7 +235,7 @@ jobs:
       run: npm run lint --if-present
       continue-on-error: true
       
- server -lint:  
+ server-lint:  
   name: server Lint
   runs-on: ubuntu-latest
   needs:
@@ -244,11 +244,11 @@ jobs:
     - checkov-dockerfile
     - checkov-terraform
 
- defaults: 
-  run: 
-    working-directory: server
+  defaults: 
+   run: 
+     working-directory: server
 
- steps:
+  steps:
     - name: Checkout Source Code
       uses: actions/checkout@v4
       
