@@ -401,7 +401,6 @@ jobs:
           context: .
           file: ./Dockerfile
           load: true # Exports directly to local docker daemon so Trivy can scan it
-          no-cache: true
           tags: |
             gauravbhardwajb96/nodejs-app:${{ github.sha }}
             gauravbhardwajb96/nodejs-app:latest
@@ -445,6 +444,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          no-cache: true
           tags: |
             gauravbhardwajb96/nodejs-app:${{ github.sha }}
             gauravbhardwajb96/nodejs-app:latest
