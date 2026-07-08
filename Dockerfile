@@ -28,7 +28,7 @@ RUN mkdir -p ./public
 # Note: React/Vite usually builds into a folder named 'build' or 'dist' inside the client.
 COPY --from=client-builder /usr/src/app/client/build ./public
 
-# Set environment production flag
+# Set environment production 
 ENV NODE_ENV=production
 
 # Apply Least Privilege Security Principle (Non-root user)
