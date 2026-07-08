@@ -1,5 +1,5 @@
 # ==========================================
-# STAGE 1: Build the Frontend Assets
+# STAGE 1: Build the Frontend Assets via Webpack
 # ==========================================
 FROM node:20-alpine AS client-builder
 WORKDIR /usr/src/app/client
@@ -21,14 +21,13 @@ RUN npm ci --omit=dev
 # Copy backend source code
 COPY server/ ./
 
-# Create the public directory for static asset hosting
+# Create the clean public directory for static asset hosting
 RUN mkdir -p ./public
 
-# Copy the built client static assets from STAGE 1
-# Changed from /client/dist to /client/public to match your config file exactly!
+# Copy the built client static assets from STAGE 1 Webpack output folder
 COPY --from=client-builder /usr/src/app/client/public/ ./public/
 
-# Set environment production 
+# Set environment production flag
 ENV NODE_ENV=production
 
 # Apply Least Privilege Security Principle (Non-root user)
