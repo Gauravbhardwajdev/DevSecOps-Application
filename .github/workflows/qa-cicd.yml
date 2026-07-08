@@ -4,12 +4,9 @@ on:
   push:
     branches:
       - qa
-    paths:
-      - 'client/**'
-      - 'server/**'
-      - '.github/workflows/qa-cicd.yml'
+  workflow_dispatch: # ◄── This adds a manual "Run workflow" button in GitHub!
 
-jobs: 
+jobs:
   gitleaks-scan:
     name: Gitleaks Scan
     runs-on: ubuntu-latest
