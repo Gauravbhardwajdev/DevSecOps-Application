@@ -4,9 +4,12 @@ on:
   push:
     branches:
       - qa
-  workflow_dispatch:
-
-jobs: 
+    paths:
+      - 'client/**'
+      - 'server/**'
+      - 'Dockerfile'                   
+      - '.github/workflows/qa-cicd.yml'                
+jobs:
   gitleaks-scan:
     name: Gitleaks Scan
     runs-on: ubuntu-latest
