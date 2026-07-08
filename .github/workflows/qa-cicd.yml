@@ -407,7 +407,7 @@ jobs:
 
       # Step 2: Set up Vulnerability Scanner
       - name: Install Trivy
-        uses: aquasecurity/setup-trivy-action@v0.2.6
+        uses: aquasecurity/setup-triv@v0.2.6
         with:
           version: latest
           
