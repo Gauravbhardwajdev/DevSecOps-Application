@@ -369,5 +369,80 @@ jobs:
         run: npm ci
         
       - name: Build Client
-        run: npm run build --if-present        
+        run: npm run build --if-present
+  
+  docker:
+    name: Docker Build, Scan, and Push
+    needs: 
+      - client-build
+      - sonarqube
+    runs-on: self-hosted # Highly recommended so Trivy can see local docker images instantly
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+     
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+       
+      # Step 1: Build the image and load it locally into the VM's docker daemon for scanning
+      - name: Build and Load Image Locally
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          load: true # Exports directly to local docker daemon so Trivy can scan it
+          tags: |
+            gauravbhardwajb96/nodejs-app:${{ github.sha }}
+            gauravbhardwajb96/nodejs-app:latest
+
+      # Step 2: Set up Vulnerability Scanner
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy-action@v0.2.6
+        with:
+          version: latest
+          
+      # Step 3: Scan the locally loaded image (JSON)
+      - name: Run Trivy Image Scan (JSON)   
+        run: |
+          trivy image --format json --output image-trivy-report.json --severity HIGH,CRITICAL --ignore-unfixed --exit-code 0 gauravbhardwajb96/nodejs-app:${{ github.sha }}
             
+      # Step 4: Scan the locally loaded image (TABLE)   
+      - name: Run Trivy Image Scan (TABLE)   
+        run: |
+          trivy image --format table --output image-trivy-report.txt --severity HIGH,CRITICAL --ignore-unfixed --exit-code 0 gauravbhardwajb96/nodejs-app:${{ github.sha }}
+
+      # Step 5: Upload Artifacts (Fixed Paths)
+      - name: Upload Trivy Image JSON Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image-trivy-json-report
+          path: image-trivy-report.json
+          if-no-files-found: warn
+            
+      - name: Upload Trivy Image TABLE Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Image-trivy-table-report
+          path: image-trivy-report.txt
+          if-no-files-found: warn
+          
+      # Step 6: Push the pre-scanned image to Docker Hub
+      # Since it was already built in Step 1, Docker Buildx will use the cache and push it instantly in seconds!
+      - name: Push Image to Docker Hub
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            gauravbhardwajb96/nodejs-app:${{ github.sha }}
+            gauravbhardwajb96/nodejs-app:latest
