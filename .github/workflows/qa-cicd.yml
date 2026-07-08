@@ -346,14 +346,14 @@ jobs:
       - name: "Example show SonarQube Quality Gate Status value"
         run: echo "The Quality Gate status is ${{ steps.sonarqube-quality-gate-check.outputs.quality-gate-status }}"
 
- client-build:
+  client-build:
     name: Client-Build
     runs-on: ubuntu-latest
     needs: client-test
     
     defaults:
         run: 
-          working-drectory: client
+          working-directory: client
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
