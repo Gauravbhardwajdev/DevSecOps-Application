@@ -26,7 +26,7 @@ RUN mkdir -p ./public
 
 # Copy the built client static assets from STAGE 1
 # Note: React/Vite usually builds into a folder named 'build' or 'dist' inside the client.
-COPY --from=client-builder /usr/src/app/client/build ./public
+COPY --from=client-builder /usr/src/app/client/dist ./public
 
 # Set environment production 
 ENV NODE_ENV=production
