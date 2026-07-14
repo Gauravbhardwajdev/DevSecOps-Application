@@ -522,7 +522,7 @@ jobs:
 
       - name: Deploy manifests
         run: |
-          kubectl apply -f k8s-manifests/ -n "${{ env.K8S_NAMESPACE }}"
+          kubectl apply -f k8s-manifests/qa -n "${{ env.K8S_NAMESPACE }}"
 
       - name: Verify rollout
         run: |
