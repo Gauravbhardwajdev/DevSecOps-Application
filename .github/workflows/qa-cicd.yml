@@ -468,19 +468,19 @@ jobs:
 
       - name: Update image tag in manifest
         run: |
-          sed -i "s|image: gauravbhardwaj96/nodejs-app:.*|image: gauravbhardwaj96/nodejs-app:${{ github.sha }}|g" k8s-manifests/qa/app-deployment.yaml
+          sed -i "s|image: gauravbhardwaj96/nodejs-app:.*|image: gauravbhardwaj96/nodejs-app:${{ github.sha }}|g" k8-manifests/qa/app-deployment.yaml
 
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add k8s-manifests/qa/app-deployment.yaml
+          git add k8-manifests/qa/app-deployment.yaml
           git commit -m "Update QA image to ${{ github.sha }} [skip ci]" || echo "No changes to commit"
           git push origin qa
           
       - name: Show updated manifest (debug)
         run: |
-          cat k8s-manifests/qa/app-deployment.yaml
+          cat k8-manifests/qa/app-deployment.yaml
 
   deploy-to-k8s:
     name: Deploy to Kubernetes
@@ -526,7 +526,7 @@ jobs:
 
       - name: Deploy manifests
         run: |
-          kubectl apply -f k8s-manifests/qa/ -n "${{ env.K8S_NAMESPACE }}"
+          kubectl apply -f k8-manifests/qa/ -n "${{ env.K8S_NAMESPACE }}"
 
       - name: Verify rollout
         run: |
