@@ -369,7 +369,7 @@ jobs:
     needs: 
       - client-build
       - sonarqube
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
