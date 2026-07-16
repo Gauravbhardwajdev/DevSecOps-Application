@@ -476,7 +476,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           # Stage the file in the correct k8s-manifests folder
-          git add k8s-manifests/qa/app-deployment.yaml
+          git add k8-manifests/qa/app-deployment.yaml
           
           # Commit the changes; if there's nothing new, it won't break the build
           git commit -m "Update QA image to ${{ github.sha }} [skip ci]" || echo "No changes to commit"
