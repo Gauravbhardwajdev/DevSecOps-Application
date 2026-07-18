@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: my-apps.store
+    - host: gauravbhardwaj.site
       http:
         paths:
           - path: /
