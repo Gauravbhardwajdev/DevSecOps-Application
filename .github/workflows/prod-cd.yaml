@@ -48,7 +48,7 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: qa # <--- ✅ Fixed: Checkout your actual branch
 
       - name: Update image tag in prod manifest
         run: |   
@@ -63,7 +63,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add k8-manifests/prod/app-deployment.yaml
           git commit -m "Update prod image to prod-${GITHUB_SHA}" || echo "No changes to commit"
-          git push origin main
+          git push origin qa # <--- ✅ Fixed: Push back to your actual branch
 
   deploy-to-k8s:
     name: Deploy to Production Kubernetes
@@ -79,7 +79,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: main
+          ref: qa # <--- ✅ Fixed: Checkout your actual branch
 
       - name: Configure AWS credentials from GitHub OIDC
         uses: aws-actions/configure-aws-credentials@v4
