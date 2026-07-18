@@ -35,24 +35,26 @@ jobs:
         run: |
           docker push "${PROD_LATEST_IMAGE}"
 
-  update-prod-manifest:
+update-prod-manifest:
     name: Update Prod Manifest
     needs: promote-image-to-prod
     runs-on: ubuntu-latest
+    env: # <--- ADD THIS BLOCK
+      GITHUB_SHA: ${{ github.sha }}
     permissions:
       contents: write
       id-token: write
-
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
-          ref: qa # <--- ✅ Fixed: Checkout your actual branch
-
+          ref: qa
+      
       - name: Update image tag in prod manifest
         run: |   
+          # This will now correctly resolve the GITHUB_SHA variable
           sed -i "s|image: gauravbhardwajb96/nodejs-app:.*|image: gauravbhardwajb96/nodejs-app:prod-${GITHUB_SHA}|g" k8-manifests/prod/app-deployment.yaml
-
+    
       - name: Show updated manifest
         run: cat k8-manifests/prod/app-deployment.yaml
 
