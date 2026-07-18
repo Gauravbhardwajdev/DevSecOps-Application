@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: app-ingress
-  namespace: prod
+  namespace: qa
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
@@ -21,4 +21,4 @@ spec:
               service:
                 name: nodejs-service
                 port:
-                  number: 80
+                  number: 5000
