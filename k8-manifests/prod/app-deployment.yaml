@@ -20,7 +20,7 @@ spec:
       containers:
         - name: nodejs-app
           # Keep this placeholder; your CI/CD pipeline will overwrite this specific tag
-          image: gauravbhardwajb96/nodejs-app:prod-5b5434f3df62c53d0a6cec6839ee31c52ab02e44
+          image: gauravbhardwajb96/nodejs-app:prod-1eb3380a1567fd75b45f3c0d6796eb1610249fb0
           ports:
             - containerPort: 5000
           env:
