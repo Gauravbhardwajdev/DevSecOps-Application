@@ -1,12 +1,10 @@
-apiVersion: apps/v1 
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-app
-  namespace: prod  # Updated from 'qa' to 'prod'
-  labels:
-    app: nodejs-app
+  namespace: prod
 spec:
-  replicas: 2  # Recommended: Increased to 2 for production availability
+  replicas: 2
   selector:
     matchLabels:
       app: nodejs-app
@@ -16,10 +14,9 @@ spec:
         app: nodejs-app
     spec:
       imagePullSecrets:
-        - name: regcred
+        - name: regcred  # <--- THIS IS THE MISSING PIECE
       containers:
         - name: nodejs-app
-          # Keep this placeholder; your CI/CD pipeline will overwrite this specific tag
           image: gauravbhardwajb96/nodejs-app:prod-1eb3380a1567fd75b45f3c0d6796eb1610249fb0
           ports:
             - containerPort: 5000
