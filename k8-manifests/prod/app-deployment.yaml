@@ -17,7 +17,7 @@ spec:
         - name: regcred  # <--- THIS IS THE MISSING PIECE
       containers:
         - name: nodejs-app
-          image: gauravbhardwajb96/nodejs-app:prod-1eb3380a1567fd75b45f3c0d6796eb1610249fb0
+          image: gauravbhardwajb96/nodejs-app:prod-729391b8e36db08e3d8b259ed686e6a260963cc6
           ports:
             - containerPort: 5000
           env:
