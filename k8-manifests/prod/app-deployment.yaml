@@ -24,7 +24,7 @@ spec:
           # ... (rest of your configuration)
           env:
             - name: DB_HOST
-              value: mysql-prod  # Ensure this points to your production service
+              value: mysql  # Ensure this points to your production service
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
