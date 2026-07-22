@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app
+  namespace: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      # THIS SECTION IS REQUIRED
+      imagePullSecrets:
+        - name: regcred 
+      containers:
+        - name: nodejs-app
+          image: gauravbhardwajb96/nodejs-app:prod-bba12112ace7ad2c4923226c3f7085b2e6d69f40
+          ports:
+            - containerPort: 5000
+          # ... (rest of your configuration)
+          env:
+            - name: DB_HOST
+              value: mysql  # Ensure this points to your production service
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_DATABASE            
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+            - name: DATABASE_URL
+              value: "mysql://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):3306/$(DB_NAME)"
