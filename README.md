@@ -122,7 +122,7 @@ Verify Deployment
 
 The complete CI/CD workflow is implemented using GitHub Actions.
 
-![GitHub Actions Pipeline](docs/screenshots/github-actions-pipeline.png)
+![GitHub Actions Pipeline](doc/github-actions-pipeline.png)
 
 ---
 
