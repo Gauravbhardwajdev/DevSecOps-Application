@@ -1,8 +1,19 @@
 # ==========================================
+# STAGE 1: Build the Client/Frontend
+# ==========================================
+FROM node:20-alpine AS client-builder
+WORKDIR /usr/src/app
+
+# Install client dependencies and build
+COPY client/package*.json ./client/
+RUN cd client && npm ci
+COPY client/ ./client/
+RUN cd client && npm run build
+
+# ==========================================
 # STAGE 2: Set up the Production Server
 # ==========================================
 FROM node:20-alpine AS production-runner
-# 1. Change WORKDIR to the root app level so paths match the project layout
 WORKDIR /usr/src/app
 
 # Install backend dependencies
@@ -12,7 +23,7 @@ RUN cd server && npm ci --omit=dev
 # Copy backend source code
 COPY server/ ./server/
 
-# 2. Copy the built client assets into the exact path server.js is looking for
+# Copy the built client assets from Stage 1
 COPY --from=client-builder /usr/src/app/client/public/ ./client/public/
 
 # Set environment production flag
