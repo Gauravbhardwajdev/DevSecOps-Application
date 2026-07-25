@@ -46,9 +46,17 @@ The pipeline follows **Shift Left Security**, ensuring security checks are perfo
 
 # 🏗 Architecture
 
-> Replace the image below after creating your architecture diagram.
-
-![Architecture](docs/architecture.png)
+```mermaid
+graph LR
+    A[Developer] -->|Git Push| B[GitHub Repository]
+    B --> C[CI/CD Pipeline]
+    C --> D[SonarQube SAST]
+    C --> E[Trivy Container Scan]
+    D --> F{Security Gate Pass?}
+    E --> F
+    F -->|Yes| G[Docker Hub / ECR]
+    G --> H[Kubernetes Deployment]
+```
 
 ---
 
